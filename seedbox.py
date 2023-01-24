@@ -78,7 +78,7 @@ async def status(ctx, args):
 
 
 @bot.command()
-async def add(ctx, args):
+async def add(ctx, args : str = None):
     if ctx.channel.id == CHANNEL_ID:
         message = await ctx.send('Adding Torrent...')
         try:
@@ -98,7 +98,6 @@ async def add(ctx, args):
                     await message.edit(content='Error Adding Magnet Link: ' + str(e))
             else:
                 await message.edit(content='Error Adding Torrent')
-
 
 @bot.command()
 async def space(ctx):
