@@ -20,15 +20,15 @@ A discord bot that allows you to control your hosted qBittorrent client from Dis
 - Start the bot using `python seedbox.py`
 
 ## Commands
-- !status all - Lists all torrents along with their names, uploaded, downloaded and state.
-- !status latest - Lists the latest added torrent along with its name, uploaded, downloaded and state.
-- !status oldest - Lists the oldest added torrent along with its name, uploaded, downloaded and state.
-- !status <number> - Lists the latest <number> added torrents along with their names, uploaded, downloaded and state.
-- !status <name> - Lists all torrents with the name <name> along with their names, uploaded, downloaded and state.
-- !add <magnet_link/torrent_file> - Adds a new torrent to the qBittorrent client using the provided magnet_link or torrent_file.
-- !remove <name> - Removes the torrent with the name <name> from the qBittorrent client.
-- !clear - Clears the channel
-- !ping <qb|bot> - Check the latency of your qBit server & bot
+- `!status all` - Lists all torrents along with their names, uploaded, downloaded and state.
+- `!status latest` - Lists the latest added torrent along with its name, uploaded, downloaded and state.
+- `!status oldest` - Lists the oldest added torrent along with its name, uploaded, downloaded and state.
+- `!status <number>` - Lists the latest <number> added torrents along with their names, uploaded, downloaded and state.
+- `!status <name>` - Lists all torrents with the name <name> along with their names, uploaded, downloaded and state.
+- `!add <magnet_link/torrent_file>` - Adds a new torrent to the qBittorrent client using the provided magnet_link or torrent_file.
+- `!remove <name>` - Removes the torrent with the name <name> from the qBittorrent client.
+- `!clear` - Clears the channel
+- `!ping <qb|bot>` - Check the latency of your qBit server & bot
 
 ## Note
 - Be sure to keep your qBittorrent WebUI URL, username and password secure.
