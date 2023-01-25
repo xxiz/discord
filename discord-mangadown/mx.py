@@ -48,7 +48,7 @@ class MX():
         else:
             return [f"https://u" + "plo" + "ads.m" + "ang" + "ade" + f"x.org/data/{hash}/{page}" for page in pages_lowres]
 
-    async def download(self, maxQuality=True):
+    async def download(self, bot, maxQuality=True):
         pages = await self.get_pages(maxQuality)
         metadata = await self.get_metadata()
         media = []
@@ -72,7 +72,7 @@ class MX():
             await self.to_cbz(media, f"{metadata.get('chapter')} - {metadata.get('title')}")
             return
 
-        thread = await self.create_thread(thread, f"{metadata.get('chapter')} - {metadata.get('title')}")
+        thread = await self.create_thread(bot, f"{metadata.get('chapter')} - {metadata.get('title')}")
 
         for file in media:
             await thread.send(file=file)
