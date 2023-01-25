@@ -42,5 +42,27 @@ async def raw(ctx, args: str = None, load_speed: str = None):
     else:
         pass
 
+@bot.command()
+async def cbz(ctx, args: str = None):
+    if ctx.author.id == 740632983630905445 and ctx.channel.id == 1067638742082400318:
+        message = await ctx.send("Checking...")
+
+        if args is None:
+            await message.edit(content="Please provide a link")
+
+        elif args.startswith("https://m" + "anga" + "d" + "e" + "x.org"):
+            chapter = args.split("chapter/")[1].replace("/", "")
+            mx = MX(chapter, message=message, is_cbz=True)
+            await mx.download(bot)
+        
+        elif args.startswith("https://read" + "se" + "in" + "en.com"):
+            rn = RN(args, message=message, is_cbz=True)
+            await rn.download(bot)
+        
+        else:
+            await message.edit(content="Please provide a valid link")
+    else:
+        pass
+
 if __name__ == "__main__":
     bot.run(TOKEN)

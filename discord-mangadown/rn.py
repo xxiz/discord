@@ -1,13 +1,13 @@
 import requests
 import discord
-import io
+import io, os
 from bs4 import BeautifulSoup
 from html import unescape
 from asyncio import sleep
 from mimetypes import guess_extension
 
 class RN():
-    def __init__(self, url: str, message: discord.Message, channelID: int = 1067638742082400318, initatorID: int = 740632983630905445, download_speed: int = 5, upload_speed: int = 0.5):
+    def __init__(self, url: str, message: discord.Message, channelID: int = 1067638742082400318, initatorID: int = 740632983630905445, download_speed: int = 5, upload_speed: int = 0.5, is_cbz = False):
         self.url = url
         self.message = message
         self.thread = None
@@ -15,6 +15,7 @@ class RN():
         self.initatorID = initatorID
         self.download_speed = download_speed
         self.upload_speed = upload_speed
+        self.is_cbz = is_cbz
         self.header = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36',
             'Referer': 'https://www.google.com',
@@ -68,6 +69,10 @@ class RN():
                         f"WARNING: could not fetch page {image} got {response.status_code}")
                 await sleep(self.download_speed)
 
+        if self.is_cbz:
+            await self.to_cbz(media, title)
+            return
+        
         thread = await self.create_thread(bot, title)
         
         for file in media:
@@ -100,3 +105,17 @@ class RN():
         self.thread = await channel.create_thread(name=title, type=discord.ChannelType.public_thread)
         await self.thread.send("<@" + str(self.initatorID) + ">")
         return self.thread
+
+    async def to_cbz(self, media_files, title):
+        import zipfile
+
+        await self.message.edit(content="Creating CBZ...")
+        with zipfile.ZipFile(f"{title}.cbz", "w") as cbz:
+            for file in media_files:
+                await self.message.edit(content=f"Adding... {media_files.index(file)}/{len(media_files)}")
+                cbz.writestr(file.filename, file.fp.read())
+        
+        await self.message.edit(content="Uploading CBZ...")
+        await self.message.channel.send(file=discord.File(f"{title}.cbz"))
+        await self.message.edit(content="Done!")
+        os.remove(f"{title}.cbz")
