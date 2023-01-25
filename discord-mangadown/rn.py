@@ -53,8 +53,6 @@ class RN():
         images, title = await self.get_data_from_json(await self.get_json_url())
         media = []
         i = 0
-        
-        thread = await self.create_thread(bot, title)
 
         for image in images:
             with requests.get(image, stream=True, headers=self.header) as response:
@@ -70,6 +68,8 @@ class RN():
                         f"WARNING: could not fetch page {image} got {response.status_code}")
                 await sleep(self.download_speed)
 
+        thread = await self.create_thread(bot, title)
+        
         for file in media:
             await thread.send(file=file)
             await self.message.edit(content=f"Uploading... {media.index(file)}/{len(media)}")

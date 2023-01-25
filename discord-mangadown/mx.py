@@ -52,8 +52,6 @@ class MX():
         metadata = await self.get_metadata()
         media = []
 
-        thread = await self.create_thread(thread, f"{metadata.get('chapter')} - {metadata.get('title')}")
-
         for page in pages:
             with requests.get(page, stream=True, headers=self.header) as response:
                 if response.status_code == 200:
@@ -65,6 +63,8 @@ class MX():
                     print(
                         f"WARNING: could not fetch page {page} got {response.status_code}")
                 await sleep(self.download_speed)
+        
+        thread = await self.create_thread(thread, f"{metadata.get('chapter')} - {metadata.get('title')}")
         
         for file in media:
             await thread.send(file=file)
